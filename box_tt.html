@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Box_tt</title>
+    <style>
+        .box{
+            width:100px;
+            height:100px;
+            background-color:cornflowerblue;
+            position:absolute;  /*絕對定位，提供座標的概念*/
+            left:100px;
+            top:200px;
+        }
+    </style>
+</head>
+<body>
+    <div class="box" id="box">Box</div>
+    <script>
+        let box=document.getElementById("box");
+        let pickup=function(){
+            
+            //讓框框可以跟著滑鼠動
+            document.addEventListener("mousemove", move);  
+            //方框框拿起來了，如果再點擊，要放下
+            box.removeEventListener("mousedown", pickup);
+            box.addEventListener("mouseup", putdown);
+            
+        };
+        let move=function(e){
+            console.log(e.clientX,e.clientY);
+            box.style.left=(e.clientX-30)+"px";
+            box.style.top=(e.clientY-30)+"px";
+        };
+        let putdown=function(){
+            //讓框框停下來
+            document.removeEventListener("mousemove", move);
+            //方框框放下了，如果再點擊，要拿起來
+            box.removeEventListener("mouseup", putdown);
+            box.addEventListener("mousedown", pickup);
+        };
+        //如果使用者點擊，要把方框框拿起來
+        box.addEventListener("mousedown", pickup);
+    </script>
+</body>
+</html>
